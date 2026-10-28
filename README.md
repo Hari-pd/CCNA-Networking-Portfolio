@@ -6,6 +6,7 @@ practice while studying CCNA at Metropolia UAS.
 ## Labs
 
 - 01-Myfirstproject-small-LAN: IPv4 addressing and connectivity testing
+- 02-NavigatingTheCiscoIOS: Basic everyday commands using CLI
 
 ## Tools
 
