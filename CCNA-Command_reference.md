@@ -120,5 +120,73 @@ A layer 2 switch primarily forwards network traffic using MAC address and does n
 
 ## 3. VLAN Configuration
 
+| `command` | what it does |
+| --- | --- |
+| `vlan 10` | creates VLAN with VLAN id 10 and enters VLAN config mode |
+| `name *Admin*` | Assigns the name Admin to VLAN 10 |
 
 
+Access port carries the traffic for one VLAN while Trunk port carries traffic for multiple VLANs. Access port is used in between switch and end devices and trunk port is used in between network devices, usually switches. Trunk port uses VLAN tagging (IEEE 802.1q) to identify which VLAN each Ethernet frame belongs to.
+
+
+**Access port configuration**
+
+| `command` | what it does |
+| --- | --- |
+| `int *f0/0*` | Enters interface config mode. (interface f0/0 here). |
+| `switchport mode access` | configures the interface as an access port. |
+| `switchport access vlan 10` | Assigns the interface to VLAN 10. |
+| `switchport voice vlan 20` | Assigns voice traffic to VLAN 20. VLAN 20 must be created beforehand to assign for voice traffic. |
+
+**Trunk port configuration** 
+
+| `command` || what it does |
+| --- | --- |
+| `int *f0/0*` | enters interface config mode. |
+| `switchport mode trunk` | configures the interface as trunk port. |
+| `switchport trunk encapsulation dot1q` | Specifies IEEE 802.1Q encapsulation, where supported. Many modern cisco switches support only 802.1Q, so the encapsulation command may not be necessary or not available at all. |
+| `switchport trunk allowed vlan 10,20` | by default, trunk allows all VLANs. this command restricts all VLANs and allowed the specified VLANs only. |
+| `switchport trunk allowed vlan {add/remove} 10` | this command adds or removes the allowed VLAN without changing the other VLANs permission. |
+| `switchport trunk native vlan 99` | Native VLAN is the VLAN whose traffic is transmitted untagged across a trunk link. Native VLAN should match on both ends of a trunk link to avoid native VLAN mismatch. by default, VLAN 1 is the native VLAN on cisco switches. this command changes the native VLAN on the trunk port to VLAN 99|
+
+**DTP Configuration**
+
+Dynamic Trunking Protocol (DTP) is a cisco proprietary protocol that allows switches to negotiate whether a link should operate as a trunk. It perfectly works in between cisco networking devices, but might not work with other vendors. Its always best to manually configure trunk ports while working with multi-vendor devices.
+
+| `command` | what it does |
+| --- | --- |
+| `int f0/0` | enters interface config mode. |
+| `switchport mode dynamic auto` | Makes the interface passively wait for other side to initiate trunk negotiation. this is also default configuration. |
+| `switchport mode dynamic desirable` | Actively attempts to negotiate a trunk connection. |
+| `switchport nonegotiate` | Disables DTP negotiation on the interface. It is good to configure this command when the port is access port or manually configured trunk port. |
+
+| modes on two ends of connection | what it makes |
+| --- | --- |
+| dynamic auto + dynamic auto | Access Link |
+| dynamic auto + dynamic desirable | Trunk Link |
+| dynamic desirable + dynamic desirable | Trunk Link |
+
+## 4. Inter-VLAN Routing
+
+Inter-VLAN routing allows devices in different VLANs to communicate with each other through a layer 3 device, such as router or layer 3 switch.
+
+** Router-On-A-Stick (ROAS)**
+
+This method uses a single physical router interface connected to a switch trunk port. The router uses multiple sub-interfaces to route traffic between VLANs. A sub-interface is a logical interface created within physical interface. Each sub-interface handles traffic for a specific VLAN and acts as that VLANs default gateway.
+
+| `command` | what it does |
+| --- | --- |
+| `int g0/0` | selects the physical router interface connected to the switch |
+| `no ip address` | removes any IPv4 address configured on the physical interface. For ROAS, we remove IP address from physical interface because IP address will be assigned to sub-interfaces. |
+| `no shut` | enables the physical interface |
+
+**Router sub-interface Configuration**
+
+| `command` | what it does |
+| --- | --- |
+| `int g0/0.10` | Creates and enters sub-interface 10 under physical interface g0/0. The sub-interface number is 10 in g0/0.10, it does not need to match exactly with VLAN ID. |
+| `encapsulation dot1q 10` | Associates the sub-interface with VLAN 10 using IEEE 802.1Q tagging. Number 10, in encapsulation dot1q 10, needs to match exactly with the VLAN ID. |
+| `ip address 192.168.10.1 255.255.255.0` | Assigns the default gateway IP address for VLAN 10. |
+| `int g0/0.20` | creates and enters sub-interface 20. |
+| `encapsulation dot1q 20` | Associates the sub-interface with VLAN 20. |
+| `ip add 192.168.20.1 255.255.255.0` | Assigns the default gateway IP address for VLAN 20. |
