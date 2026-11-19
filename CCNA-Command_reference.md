@@ -14,29 +14,29 @@ This document records commands, their purpose, and where they are commonly used.
 
 
 
-## 1\. Basic Cisco IOS Navigation
+## 1. Basic Cisco IOS Navigation
 
 
 
 Command						What it does
 
-\----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-enable						Enters privileged EXEC mode(#).
+enable                      Enters privileged EXEC mode(#).
 
 disable						Returns to user EXEC mode(>).
 
-configure terminal				Enters global configuration mode.
+configure terminal			Enters global configuration mode.
 
 exit						moves back one config level.
 
-end						returns directly to privileged EXEC mode
+end						    returns directly to privileged EXEC mode
 
 
 
 
 
-## 2\. Basic Router and Switch Settings
+## 2. Basic Router and Switch Settings
 
 
 
@@ -154,7 +154,7 @@ ip default-gateway *192.168.1.1*			Defines the gateway used to reach devices out
 
 
 
-## 3\. VLAN Configuration
+## 3. VLAN Configuration
 
 
 
