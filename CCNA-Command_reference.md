@@ -129,7 +129,7 @@ A layer 2 switch primarily forwards network traffic using MAC address and does n
 Access port carries the traffic for one VLAN while Trunk port carries traffic for multiple VLANs. Access port is used in between switch and end devices and trunk port is used in between network devices, usually switches. Trunk port uses VLAN tagging (IEEE 802.1q) to identify which VLAN each Ethernet frame belongs to.
 
 
-**Access port configuration**
+**I. Access port configuration**
 
 | `command` | what it does |
 | --- | --- |
@@ -138,9 +138,9 @@ Access port carries the traffic for one VLAN while Trunk port carries traffic fo
 | `switchport access vlan 10` | Assigns the interface to VLAN 10. |
 | `switchport voice vlan 20` | Assigns voice traffic to VLAN 20. VLAN 20 must be created beforehand to assign for voice traffic. |
 
-**Trunk port configuration** 
+**II: Trunk port configuration** 
 
-| `command` || what it does |
+| `command` | what it does |
 | --- | --- |
 | `int *f0/0*` | enters interface config mode. |
 | `switchport mode trunk` | configures the interface as trunk port. |
@@ -149,7 +149,7 @@ Access port carries the traffic for one VLAN while Trunk port carries traffic fo
 | `switchport trunk allowed vlan {add/remove} 10` | this command adds or removes the allowed VLAN without changing the other VLANs permission. |
 | `switchport trunk native vlan 99` | Native VLAN is the VLAN whose traffic is transmitted untagged across a trunk link. Native VLAN should match on both ends of a trunk link to avoid native VLAN mismatch. by default, VLAN 1 is the native VLAN on cisco switches. this command changes the native VLAN on the trunk port to VLAN 99|
 
-**DTP Configuration**
+**III. DTP Configuration**
 
 Dynamic Trunking Protocol (DTP) is a cisco proprietary protocol that allows switches to negotiate whether a link should operate as a trunk. It perfectly works in between cisco networking devices, but might not work with other vendors. Its always best to manually configure trunk ports while working with multi-vendor devices.
 
@@ -170,7 +170,7 @@ Dynamic Trunking Protocol (DTP) is a cisco proprietary protocol that allows swit
 
 Inter-VLAN routing allows devices in different VLANs to communicate with each other through a layer 3 device, such as router or layer 3 switch.
 
-** Router-On-A-Stick (ROAS)**
+**I. Router-On-A-Stick (ROAS)**
 
 This method uses a single physical router interface connected to a switch trunk port. The router uses multiple sub-interfaces to route traffic between VLANs. A sub-interface is a logical interface created within physical interface. Each sub-interface handles traffic for a specific VLAN and acts as that VLANs default gateway.
 
@@ -190,3 +190,29 @@ This method uses a single physical router interface connected to a switch trunk 
 | `int g0/0.20` | creates and enters sub-interface 20. |
 | `encapsulation dot1q 20` | Associates the sub-interface with VLAN 20. |
 | `ip add 192.168.20.1 255.255.255.0` | Assigns the default gateway IP address for VLAN 20. |
+
+**II. Layer 3 Switch SVI Configuration**
+
+A layer 3 switch can perform routing between VLANs using Switch Virtual Interfaces (SVIs). Each VLAN gets an IP address that acts as the default gateway for devices in that VLAN.
+**Layer 3 switch to layer 2 switch configuration**
+Used to create VLAN gateways and route traffic between VLANs.
+
+| `command` | what it does |
+| --- | --- |
+| `ip routing` | Enables layer 3 routing on the switch |
+| `int vlan 10`| creates or enters the SVI VLAN config mode |
+| `ip add 192.168.10.1 255.255.255.0` | Assigns the default gateway IP for VLAN 10 |
+| `no shut` | Enables the SVI |
+| `int vlan 20` | creates or enters the SVI VLAN config mode |
+| `ip add 192.168.20.1 255.255.255.0` | Assigns the default gateway IP for VLAN 20 |
+| `no shut` | enables the SVI |
+
+**Layer 3 Switch to router configuration**
+Used to establish a Layer 3 connection between the switch and router.
+
+| `command` | what it does |
+| --- | --- |
+| `int g0/0` | enters the physical interface config mode. |
+| `no switchport` | Converts the Layer 2 switchport into a routed Layer 3 interface. |
+| `ip add 192.168.100.2 255.255.255.252` | Assigns ip address to the routed interface. |
+| `no shut` | Enables the interface. |
