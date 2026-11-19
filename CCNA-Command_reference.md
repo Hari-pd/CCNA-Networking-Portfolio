@@ -32,8 +32,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 ## 2. Basic Router and Switch Settings
 
-
-
+| `command` | what it does |
+| --- | --- |
 | `hostname *name-of-device*` |	Name the device. |
 | `enable secret *encrypted-password-to-set*` | sets encrypted password required to enter privileged EXEC mode. |
 | `service password-encryption` | encrypts plaintext passwords in the running configuration. |
@@ -46,6 +46,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 **Configure a console line password**
 
+| `command` | what it does |
+| --- | --- |
 | `line console 0` | Enters console line configuration mode to configure console access. |
 | `password *Cisco*` | sets the password (Cisco) for console access. |
 | `login` | enables password authentication when accessing the console line. |
@@ -54,6 +56,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 **Configure a VTY line password (Remote access)**
 
+| `command` | what it does |
+| --- | --- |
 | `line vty 0 4` | Enters VTY line config mode for lines 0-4, used for remote access. The available VTY range depends on the device, check with *show line*. |
 | `password *Cisco*` | sets the password (Cisco) for remote access. |
 | `login` | enables the password authentication when accessing remotely. |
@@ -62,6 +66,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 **Remote access configuration (SSH)**
 
+| `command` | what it does |
+| --- | --- |
 | `ip domain-name *domain.com*` | configures the domain name required for RSA key generation. |
 | `username *Admin* secret *Cisco*` | creates a local user account with an encrypted password. |
 | `crypto key generate rsa` | Generates RSA key required for SSH connection. |
@@ -72,6 +78,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 **Configure interfaces (common commands for router and switch)**
 
+| `command` | what it does |
+| --- | --- |
 | `int *interface-id(f0/0, g0/0, g0/0/0)*` | enters interface configuration mode to configure a specific interface. |
 | `int range *interface-id(f0/0-5, g0/0-2)*` | selects multiple interfaces for simultaneous configuration. |
 | `description *Admin LAN*` | adds description to the interface. |
@@ -85,6 +93,8 @@ This document records commands, their purpose, and where they are commonly used.
 
 **Router-Specific Interface Configuration**
 
+| `command` | what it does |
+| --- | --- |
 | `ipv6 unicast-routing` | in the global configuration mode, enables ipv6 packet forwarding between networks. |
 | `ip add *192.168.1.20 255.255.255.0*` | assigns an IPv4 address and subnet mask to an interface. |
 | `no ip address` | removes an IPv4 address from the interface. |
@@ -99,7 +109,8 @@ This document records commands, their purpose, and where they are commonly used.
 A layer 2 switch primarily forwards network traffic using MAC address and does not have an IP address assigned to its physical interfaces. Unlike a router, which can be accessed remotely through an IP address, a switch requires a management SVI and a default gateway for remote access.
 
 
-
+| `command` | what it does |
+| --- | --- |
 | `int vlan *1*` | enters the SVI configuration mode for VLAN 1. |
 | `ip add *192.168.1.2 255.255.255.0*` | Assigns an IPv4 management address to the SVI. |
 | `ip default-gateway *192.168.1.1*` | Defines the gateway used to reach devices outside the management subnet. Default-gateway is assigned in global config mode, not SVI config mode. |
