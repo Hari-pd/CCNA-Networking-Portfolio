@@ -18,19 +18,15 @@ This document records commands, their purpose, and where they are commonly used.
 
 
 
-Command						What it does
+|`Command`|`What it does`|
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+|---|---|
 
-enable                      Enters privileged EXEC mode(#).
-
-disable						Returns to user EXEC mode(>).
-
-configure terminal			Enters global configuration mode.
-
-exit						moves back one config level.
-
-end						    returns directly to privileged EXEC mode
+|`enable`|`Enters privileged EXEC mode(#).`|
+|`disable`|`Returns to user EXEC mode(>).`|
+|`configure terminal`|`Enters global configuration mode.`|
+|`exit`|`moves back one config level.`|
+|`end`|`returns directly to privileged EXEC mode`|
 
 
 
