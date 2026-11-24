@@ -1,11 +1,13 @@
-\#1. Project Overview
+# Entreprise Network: Hands-on Lab.
+
+
+## 1. Project Overview
 
 This is a hands-on networking project for a company with two offices, HQ and a branch office. The project involves my learning from the CCNA course and the goal is to apply the networking concepts I have studied in a practical environment using Cisco Packet Tracer. The project will cover the learnings of VLANs, inter-VLAN routing, STP concepts, EtherChannel, DHCPv4, DHCPv6, SLAAC and FHRP concepts.
 
 
 
-\##2. Project Objectives
-
+## 2. Project Objectives
 
 
 A. Design a scalable dual-stack network connecting HQ and branch office.
@@ -22,15 +24,14 @@ E. Implement network redundancy using STP, EtherChannel and FHRP.
 
 
 
-\##3. Network Requirements
-
+## 3. Network Requirements
 
 
 The network is designed around the following business and technical requirements:
 
 
 
-\*\*Location and Departments\*\*
+**Location and Departments**
 
 
 
@@ -44,7 +45,7 @@ The network is designed around the following business and technical requirements
 
 
 
-\*\*Network Segmentation\*\*
+**Network Segmentation**
 
 
 
@@ -57,7 +58,7 @@ The network is designed around the following business and technical requirements
 
 
 
-\*\*Network Services\*\*
+**Network Services**
 
 
 
@@ -68,7 +69,7 @@ The network is designed around the following business and technical requirements
 
 
 
-\*\*Availability and Redundancy\*\*
+**Availability and Redundancy**
 
 
 
