@@ -194,6 +194,7 @@ This method uses a single physical router interface connected to a switch trunk 
 **II. Layer 3 Switch SVI Configuration**
 
 A layer 3 switch can perform routing between VLANs using Switch Virtual Interfaces (SVIs). Each VLAN gets an IP address that acts as the default gateway for devices in that VLAN.
+
 **Layer 3 switch to layer 2 switch configuration**
 Used to create VLAN gateways and route traffic between VLANs.
 
