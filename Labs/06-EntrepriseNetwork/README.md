@@ -89,8 +89,8 @@ The network is designed around the following business and technical requirements
 
 For redundancy, two layer-3 switches were used. STP and HSRP configured to prevent switching loops and redundancy.
 
-Layer-3 switch 1 name: HQ-SW1
-Layer-3 switch 2 name: HQ-SW2
+* Layer-3 switch 1 name: HQ-SW1
+* Layer-3 switch 2 name: HQ-SW2
 
 | interface | HQ-SW1 IP | HQ-SW2 IP | HSRP Virtual IP (default gateway for each VLANs) | Active Switch | Standby Switch |
 | --- | --- | --- | --- | --- | --- |
@@ -129,42 +129,42 @@ Layer-3 switch 2 name: HQ-SW2
  * Trunk connection to other switches
 
 ! Enable Layer 3 routing
- ip routing
+ip routing
 
 ! Configure VLAN 99 management interface
-| 'command' | what it does |
+| `command` | what it does |
 | --- | --- |
-| 'interface vlan 99' | creates or enters the vlan interface |
-| 'ip address 10.10.99.254 255.255.255.0' | allocate static ip to the interface |
-| 'no shutdown' | enables the vlan |
-| 'interface vlan 10' | creates or enters the vlan interface |
-| 'ip address 10.10.0.1 255.255.255.192' | allocate static ip to the interface |
-| 'no shutdown' | enables the interface |
+| `interface vlan 99` | creates or enters the vlan interface |
+| `ip address 10.10.99.254 255.255.255.0` | allocate static ip to the interface |
+| `no shutdown` | enables the vlan |
+| `interface vlan 10` | creates or enters the vlan interface |
+| `ip address 10.10.0.1 255.255.255.192` | allocate static ip to the interface |
+| `no shutdown` | enables the interface |
 
 ! Configure Trunk port
-| 'command' | what it does |
+| `command` | what it does |
 | --- | --- |
-| 'interface f0/11' | enters interface configuration mode |
-| 'switchport trunk encapsulation dot1q' | configure 802.1Q encapsulation |
-| 'switchport mode trunk' | configure the interface to trunk port |
-| 'switchport trunk native vlan 100' | configure vlan 100 as native vlan for the trunk port |
-| 'switchport trunk allowed vlan 10,20,99,100' | configures to allow only vlan 10,20,99 and 100 to pass through the trunk port |
+| `interface f0/11` | enters interface configuration mode |
+| `switchport trunk encapsulation dot1q` | configure 802.1Q encapsulation |
+| `switchport mode trunk` | configure the interface to trunk port |
+| `switchport trunk native vlan 100` | configure vlan 100 as native vlan for the trunk port |
+| `switchport trunk allowed vlan 10,20,99,100` | configures to allow only vlan 10,20,99 and 100 to pass through the trunk port |
 
 ! Configure STP Root bridge
-| 'command' | what it does |
+| `command` | what it does |
 | --- | --- |
-| 'config t' | enters global configuration mode |
-| 'spanning-tree vlan 10,20,99 root primary' | instructs the switch to become STP root bridge for vlan 10,20 and 99. |
-| 'spanning-tree vlan 30,40,50,60,90,101,100 root secondary' | instructs the switch to become STP backup root bridge for selected vlans. If the root bridge of the selected vlans fail, this switch will be the root bridge. |
+| `config t` | enters global configuration mode |
+| `spanning-tree vlan 10,20,99 root primary` | instructs the switch to become STP root bridge for vlan 10,20 and 99. |
+| `spanning-tree vlan 30,40,50,60,90,101,100 root secondary` | instructs the switch to become STP backup root bridge for selected vlans. If the root bridge of the selected vlans fail, this switch will be the root bridge. |
 
 ! Configure HSRP
-| 'command' | what it does |
+| `command` | what it does |
 | --- | --- |
-| 'interface vlan 99' | enters vlan configuration |
-| 'standby 99 ip 10.10.99.5' | Add HSRP Virtual IP |
-| 'standby 99 priority 110' | Increase priority value to make this switch HSRP active |
-| 'standby 99 preempt' | Allows higher priority device to reclaim active status |
-| 'interface vlan 10' | enters vlan configuration |
-| 'standby 10 ip 10.10.03' | Add HSRP Virtual IP |
-| 'standby 10 priority 110' | Increase priority values to make this switch active |
-| 'standby 10 preempt' | Allows higher priority device to reclaim active status after the device or link comes up from failure |
+| `interface vlan 99` | enters vlan configuration |
+| `standby 99 ip 10.10.99.5` | Add HSRP Virtual IP |
+| `standby 99 priority 110` | Increase priority value to make this switch HSRP active |
+| `standby 99 preempt` | Allows higher priority device to reclaim active status |
+| `interface vlan 10` | enters vlan configuration |
+| `standby 10 ip 10.10.03` | Add HSRP Virtual IP |
+| `standby 10 priority 110` | Increase priority values to make this switch active |
+| `standby 10 preempt` | Allows higher priority device to reclaim active status after the device or link comes up from failure |
